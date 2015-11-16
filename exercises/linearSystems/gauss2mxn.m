@@ -1,4 +1,4 @@
-function [L ,R ,P , deter ]= gauss2 ( A );
+function [L, R, P , deter ]= gauss2mxn ( A );
 % fattorizzazione di Gauss con pivoting parziale - II versione
 %
 % Ax = b
@@ -14,12 +14,15 @@ function [L ,R ,P , deter ]= gauss2 ( A );
 % Ly = b -> y = solLower(L, b)
 
 
-n = size (A ,1);
+[m, n] = size (A);
 deter = 1;
-temp = zeros (1 , size (A ,2));
-P = 1: n ;
+temp = zeros (1 , n);
+P = 1: m ;
 tol = eps * norm (A , inf );
-for k = 1: n -1
+L = eye(m,m);
+R = zeros(m,n);
+
+for k = 1: min( m-1, n )
   %% trovo l'elemento massimo nella colonna corrente
   [ amax , ind ] = max ( abs ( A ( k :n , k )));
   %% trasformazione da indice vettore colonna a indice matrice (globale)
@@ -44,7 +47,7 @@ for k = 1: n -1
     % creo i moltiplicatori di Lk^-1 ( L^-1 è la matrice di trasformazione elementare di gauss invertita).
     % i moltiplicatori non hanno il segno - poichè, data una matrice triangolare inferiore con 1 sulla diagonale L,
     % la sua inversa ha tutti gli elementi (tranne gli 1 sulla diagonale) invertiti di segno.
-    A ( k +1: end , k ) = A ( k +1: end , k )/ A (k , k );
+    A( k +1: end , k ) = A ( k +1: end , k )/ A (k , k );
     % Aggiorno la sottomatrice Atilde al passo k... come?
     % prendiamo il vettore contenente i moltiplicatori generati al passo precedente ed aggiungiuamo il segno -
     % successivamente con un prodotto tra vettore colonna ( moltiplicatori con -) e vettore riga ( k°esima riga senza pivot)
@@ -55,7 +58,12 @@ end ;
 deter = deter * A (n , n );
 % la triangolare superiore R è posizionata nella triangolare superiore di A modificata
 % R = DU
-R = triu ( A );
+%R = triu ( A );
 % L invece si trova nella parte trangolare inferiore di A, ma ha 1 sulla diagonale
 % L = L1^-1 * L2^-1 * Ln ^ -1 dove Li sono matrici di trasformazione elementare di gauss.
-L = eye ( n )+ tril ( A (1: n ,1: n ) , -1);
+%L = eye ( n )+ tril ( A (1: n ,1: n ) , -1);
+
+L = tril(A, -1);
+L = [L zeros(m,m-n)];
+L = L + eye(m);
+R = triu( A ); 
