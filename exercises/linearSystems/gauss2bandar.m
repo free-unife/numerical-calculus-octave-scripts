@@ -1,4 +1,4 @@
-function [L, R, P , deter ]= gauss2mxn ( A );
+function [L ,R ,P , deter ]= gauss2 ( A, r );
 % fattorizzazione di Gauss con pivoting parziale - II versione
 %
 % Ax = b
@@ -14,21 +14,19 @@ function [L, R, P , deter ]= gauss2mxn ( A );
 % Ly = b -> y = solLower(L, b)
 
 
-[m, n] = size (A);
+n = size (A ,1);
 deter = 1;
-temp = zeros (1 , n);
-P = 1: m ;
+temp = zeros (1 , size (A ,2));
+P = 1: n ;
 tol = eps * norm (A , inf );
-L = eye(m,m);
-R = zeros(m,n);
-
-for k = 1: min( m-1, n )
+for k = 1: n -1
   %% trovo l'elemento massimo nella colonna corrente
-  [ amax , ind ] = max ( abs ( A ( k : m , k )));
+  [ amax , ind ] = max ( abs ( A ( k :n , k )));
   %% trasformazione da indice vettore colonna a indice matrice (globale)
   ind = ind +k -1;
   %% se [amax, ind] non è in posizione pivot, allora scambio le righe di A
   if k ~= ind
+    error("caso complicato dellammerda");
     aux = P(k);
     P(k) = P ( ind );
     P(ind) = aux; 
@@ -47,31 +45,19 @@ for k = 1: min( m-1, n )
     % creo i moltiplicatori di Lk^-1 ( L^-1 è la matrice di trasformazione elementare di gauss invertita).
     % i moltiplicatori non hanno il segno - poichè, data una matrice triangolare inferiore con 1 sulla diagonale L,
     % la sua inversa ha tutti gli elementi (tranne gli 1 sulla diagonale) invertiti di segno.
-    A( k +1: end , k ) = A ( k +1: end , k )/ A (k , k );
+    A ( k +1: r+1 , k ) = A ( k +1: r+1 , k )/ A (k , k );
     % Aggiorno la sottomatrice Atilde al passo k... come?
     % prendiamo il vettore contenente i moltiplicatori generati al passo precedente ed aggiungiuamo il segno -
     % successivamente con un prodotto tra vettore colonna ( moltiplicatori con -) e vettore riga ( k°esima riga senza pivot)
     % e otteniamo una matrice contenente -mk volte la k riga, questa matrice si somma a quella originale.
-    A ( k +1: end , k +1: end ) = A ( k +1: end , k +1: end ) + (- A ( k +1: end , k )* A (k , k +1: end ));
+    Atilde = (- A ( k +1: r+1 , k )* A (k , k +1: r+1 ))
+    A ( k +1: end , k +1: end ) = A ( k +1: end , k +1: end ) + Atilde;
   end ;
 end ;
-
+%deter = deter * A (n , n );
 % la triangolare superiore R è posizionata nella triangolare superiore di A modificata
 % R = DU
-%R = triu ( A );
+R = triu ( A );
 % L invece si trova nella parte trangolare inferiore di A, ma ha 1 sulla diagonale
 % L = L1^-1 * L2^-1 * Ln ^ -1 dove Li sono matrici di trasformazione elementare di gauss.
-%L = eye ( n )+ tril ( A (1: n ,1: n ) , -1);
-
-L = tril(A, -1);
-
-if( m > n)
-  deter = deter * A (n , n );
-  L = [L zeros(m,m-n)];
-  L = L + eye(m);
-else
-  deter = deter * A(m , m);
-  L = L(1:m, 1:m);
-  L = L + eye(m);
-end
-R = triu( A ); 
+L = eye ( n )+ tril ( A (1: n ,1: n ) , -1);
