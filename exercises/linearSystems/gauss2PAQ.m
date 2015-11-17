@@ -1,4 +1,4 @@
-function [L ,R ,P, deter] = gauss2BandaR (A, r);
+function [L ,R ,P, Q , deter ]= gauss2PAQ ( A );
 % fattorizzazione di Gauss con pivoting parziale - II versione
 %
 % Ax = b
@@ -16,35 +16,70 @@ function [L ,R ,P, deter] = gauss2BandaR (A, r);
 
 n = size (A ,1);
 deter = 1;
-temp = zeros (1 , size (A ,2));
+tempP = zeros (1 , size (A ,2));
+tempQ = zeros (1 , size (A ,2));
 P = 1: n ;
+Q = 1: n;
 tol = eps * norm (A , inf );
-isPivoting = r;
-for k = 1: n - isPivoting
+for k = 1: n -1
   %% trovo l'elemento massimo nella colonna corrente
-  [ amax , ind ] = max ( abs ( A ( k :n , k )));
+  %[ amax , ind ] = max ( abs ( A ( k :n , k : n )));
+  
+  [amax, riga] = max(abs(A( k : n, k : n)));
+  [bmax, colonna] = max(amax);
+  riga = riga(colonna);
+  
   %% trasformazione da indice vettore colonna a indice matrice (globale)
-  ind = ind +k -1;
+  riga = riga +k -1;
+  colonna = colonna + k - 1;
+  
   %% se [amax, ind] non è in posizione pivot, allora scambio le righe di A
-  if k ~= ind
-    isPivoting = 2*r;
+  pq = [[k, k] == [riga, colonna]]
+  
+  if [pq(1), pq(2)] == [0 0] %% scambio sia righe che colonne
+    %% scambio le righe
     aux = P(k);
-    P(k) = P ( ind );
-    P(ind) = aux; 
+    P(k) = P ( riga );
+    P(riga) = aux; 
     deter = -deter;
-    temp = A ( ind ,:);
-    A(ind,:) = A(k,:);
+    temp = A ( riga ,:);
+    A(riga,:) = A(k,:);
     A (k ,:) = temp;
-  end ;
+    
+    %% scambio le colonne
+    aux = Q(k);
+    Q(k) = Q ( colonna );
+    Q(colonna) = aux; 
+    deter = -deter;
+    temp = A ( : ,colonna);
+    A(:,colonna) = A(:,k);
+    A (: ,k) = temp;
+  elseif [pq(1), pq(2)] == [0 1] %% scambio le righe
+    aux = P(k);
+    P(k) = P ( riga );
+    P(riga) = aux; 
+    deter = -deter;
+    temp = A ( riga ,:);
+    A(riga,:) = A(k,:);
+    A (k ,:) = temp;
+  elseif [pq(1), pq(2)] == [1 0] %% scambio le colonne
+    aux = Q(k);
+    Q(k) = Q ( colonna );
+    Q(colonna) = aux; 
+    deter = -deter;
+    temp = A ( : ,colonna);
+    A(:,colonna) = A(:,k);
+    A (: ,k) = temp;
+  else %% nessuna operazione, l'elemento massimo è gia in posizione pivot
+  
+  end;
+  
 
   % Il determinante si puo' ricavare dal rango.
   % det (A) = ((-1) ^ #permutazioni) * R(1:1:n, 1:1:n)
   deter = deter * A (k , k );
   % Se il pivot NON tende a zero...
   if abs ( A (k , k )) > tol
-    fprintf("k: %g\n", k);
-    fprintf("r: %g\n", r);
-    fprintf("isPivoting: %g\n", isPivoting);
     % ...allora posso fattorizzare con gauss
     % creo i moltiplicatori di Lk^-1 ( L^-1 è la matrice di trasformazione elementare di gauss invertita).
     % i moltiplicatori non hanno il segno - poichè, data una matrice triangolare inferiore con 1 sulla diagonale L,
@@ -54,8 +89,7 @@ for k = 1: n - isPivoting
     % prendiamo il vettore contenente i moltiplicatori generati al passo precedente ed aggiungiuamo il segno -
     % successivamente con un prodotto tra vettore colonna ( moltiplicatori con -) e vettore riga ( k°esima riga senza pivot)
     % e otteniamo una matrice contenente -mk volte la k riga, questa matrice si somma a quella originale.
-    %(- A ( k +1: end , k )* A (k , k + 1: k + isPivoting))
-    A ( k +1: end , k +1: isPivoting + 1 ) = A ( k +1: end , k +1: isPivoting + 1 ) + (- A ( k +1: end , k )* A (k , k + 1: isPivoting + 1))
+    A ( k +1: end , k +1: end ) = A ( k +1: end , k +1: end ) + (- A ( k +1: end , k )* A (k , k +1: end ));
   end ;
 end ;
 deter = deter * A (n , n );
