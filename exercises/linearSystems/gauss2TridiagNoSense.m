@@ -1,4 +1,12 @@
+% Copyright © 2015 Franco Masotti <franco.masotti@student.unife.it>
+%                  Danny Lessio
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the LICENSE file for more details.
+
+
 function [L ,R ,P , deter ]= gauss2TridiagNoSense ( A );
+% TODO
 % fattorizzazione di Gauss senza pivoting per matrici tridiagonali con implementazione dell'algoritmo di Thomas.
 % La matrice dev'essere tridiagonale strettamente diagonale dominante per righe(colonne)
 % Questo algoritmo non ha molto senso...
@@ -16,7 +24,7 @@ for k = 2 : n
   ind = ind +k -1;
   %% se [amax, ind] non è in posizione pivot, allora scambio le righe di A
   if k ~= ind
-    error("La matrice tridiagonale non è fattorizzabile come L bidiagonale inferiore ed R bidiagonale superiore");
+    error("La matrice tridiagonale non è fattorizzabile come L bidiagonale inferiore ed R bidiagonale superiore.");
   end ;
 
   % Il determinante si puo' ricavare dal rango.
@@ -29,7 +37,7 @@ for k = 2 : n
     %% let's calc ui
     A ( k, k ) = A( k, k ) + (- A( k, k - 1 ) * A( k - 1, k ));
   else
-    error("division by 0");
+    error("Division by 0.");
   end;
 end ;
 deter = deter * A (n , n );

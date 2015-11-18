@@ -1,3 +1,10 @@
+% Copyright © 2015 Franco Masotti <franco.masotti@student.unife.it>
+%                  Danny Lessio
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the LICENSE file for more details.
+
+
 function [L, R, P, Q, deter] = gauss2PAQ (A);
 % Full pivoting Gauss factorization.
 %
@@ -138,6 +145,7 @@ L = eye (n) + tril (A (1 : n, 1 : n), - 1);
 
 % As you can see from this the solution is perturbated.
 % Have a look at: http://www.netlib.org/lapack/lug/node75.html
+% On that page it's written that the relative error represents the number of
+% accurate decimal digits.
 HowBadIsTheRelativeError = norm ((L * R) - (A (P, Q)), Inf) / norm (A (P, Q), Inf);
-HowBadIsTheRelativeError = HowBadIsTheRelativeError * 100;
-fprintf ('Relative error = %g %%\n', HowBadIsTheRelativeError);
+fprintf ('Relative error = %g accurate decimal digits\n', HowBadIsTheRelativeError);
