@@ -1,33 +1,21 @@
 function [L ,R ,P, deter] = gauss2BandaR (A, r);
-% fattorizzazione di Gauss con pivoting parziale - II versione
-%
-% Ax = b
-% PAx = Pb
-% nota! PA = LR
-% LRx = Pb
-% Rx = y -> x = solUpper(R, y), prima dobbiamo ottenere y con solLower()
-% Ly = Pb -> prima di invocare solLower() dobbiamo riordinare b usando P
-% P in questo caso, NON È una matrice ma un vettore contenente lo storico delle permutazioni 
-% se b ha dimensione n*1, allora è possibile riordinarlo con un singolo comando: b = [b(P(1:n))]
-% eseguire quest'ultima operazione equivale a moltiplicare la matrice di permutazione P * b
-% ora possiamo:
-% Ly = b -> y = solLower(L, b)
-
+% Fattorizzazione ottimizzata di matrici a banda con pivoting parziale
 
 n = size (A ,1);
 deter = 1;
 temp = zeros (1 , size (A ,2));
 P = 1: n ;
 tol = eps * norm (A , inf );
-isPivoting = r;
-for k = 1: n - isPivoting
+dimBanda = r;
+
+for k = 1: n -1
   %% trovo l'elemento massimo nella colonna corrente
   [ amax , ind ] = max ( abs ( A ( k :n , k )));
   %% trasformazione da indice vettore colonna a indice matrice (globale)
   ind = ind +k -1;
   %% se [amax, ind] non è in posizione pivot, allora scambio le righe di A
   if k ~= ind
-    isPivoting = 2*r;
+    dimBanda = 2*r;
     aux = P(k);
     P(k) = P ( ind );
     P(ind) = aux; 
@@ -42,20 +30,34 @@ for k = 1: n - isPivoting
   deter = deter * A (k , k );
   % Se il pivot NON tende a zero...
   if abs ( A (k , k )) > tol
-    fprintf("k: %g\n", k);
-    fprintf("r: %g\n", r);
-    fprintf("isPivoting: %g\n", isPivoting);
-    % ...allora posso fattorizzare con gauss
-    % creo i moltiplicatori di Lk^-1 ( L^-1 è la matrice di trasformazione elementare di gauss invertita).
-    % i moltiplicatori non hanno il segno - poichè, data una matrice triangolare inferiore con 1 sulla diagonale L,
-    % la sua inversa ha tutti gli elementi (tranne gli 1 sulla diagonale) invertiti di segno.
-    A ( k +1: end , k ) = A ( k +1: end , k )/ A (k , k );
-    % Aggiorno la sottomatrice Atilde al passo k... come?
-    % prendiamo il vettore contenente i moltiplicatori generati al passo precedente ed aggiungiuamo il segno -
-    % successivamente con un prodotto tra vettore colonna ( moltiplicatori con -) e vettore riga ( k°esima riga senza pivot)
-    % e otteniamo una matrice contenente -mk volte la k riga, questa matrice si somma a quella originale.
-    %(- A ( k +1: end , k )* A (k , k + 1: k + isPivoting))
-    A ( k +1: end , k +1: isPivoting + 1 ) = A ( k +1: end , k +1: isPivoting + 1 ) + (- A ( k +1: end , k )* A (k , k + 1: isPivoting + 1))
+  
+    %% creo i moltiplicatori di L
+    % A ( k + (1: end) , k ) = A ( k +1: end , k )/ A (k , k );
+    
+    %% L nel caso non avvenga lo scambio di righe ha esattamente r moltiplicatori.
+    % nel caso vi sia almeno uno scambio ha al massimo r moltiplicatori.
+    % in ogni caso avra sempre n_moltiplicatori <= r diversi da 0, se raggiungiamo questo limite usciamo dal ciclo.
+    %% counter contiene il numero di moltiplicatori != 0.    
+    counter = 0;
+    for i = 1 : (n - k)
+      A ( k + i, k) = A(k + i, k) / A( k, k );
+      if A( k + i, k) > tol
+        counter = counter + 1;
+      end;
+      if counter >= r
+        break;
+      end;
+    end;
+    
+    %% Qui creo l'eliminazione, nella prima condizione, salto tutti gli elementi che sarebbero nulli nella moltiplicazione tra li ed aj
+    %% in questo caso il trucco vale
+    if k <= n - dimBanda
+      A( k + 1: end , k + 1: k + dimBanda ) = A( k + 1: end , k + 1: k + dimBanda ) + (- A ( k +1: end , k )* A (k , k +1: k + dimBanda ));
+    else %% qui non vale più
+      A ( k +1: end , k +1: end ) = A ( k +1: end , k +1: end ) + (- A ( k +1: end , k )* A (k , k +1: end ));
+    end;
+    
+    
   end ;
 end ;
 deter = deter * A (n , n );
