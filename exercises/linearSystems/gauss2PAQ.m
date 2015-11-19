@@ -6,6 +6,8 @@
 
 
 function [L, R, P, Q, deter] = gauss2PAQ (A);
+% [L, R, P, Q, deter] = gauss2PAQ (A);
+%
 % Full pivoting Gauss factorization.
 %
 % Ax = b

@@ -6,13 +6,19 @@
 
 
 function [L, R ,P, deter] = gauss2BandaR (A, r);
+% [L, R ,P, deter] = gauss2BandaR (A, r);
+%
 % Optimized version of Gauss factorization for band matrix with
 % bandwidth r. Patrial pivoting is used.
 %
-% I = { matrix A with row and column bandwidth r, bandwidth r. }
-% P = {} TODO.
-% O = {}
-% C = {}
+% I = { matrix A nxn, bandwidth r. }
+% P = { A has row and column bandwidth r. }
+% O = { L lower triangular matrix with: lower bandwidth r
+% || maximum number of non zero elements for each column is r,
+% R upper triangular matrix with: upper bandwidth r || upper bandwidth 2 * r
+% (L and R fist case = no pivoting; second case = at least one pivoting.)
+% , row permutation vector P, matrix determinant deter. }
+% C = { A = L * R }
 
 n = size (A ,1);
 deter = 1;
@@ -78,13 +84,22 @@ for k = 1: n -1
 			end;
 		end;
 
-% TODO comments...
-%% Qui creo l'eliminazione, nella prima condizione, salto tutti gli elementi che sarebbero nulli nella moltiplicazione tra li ed aj
-%% in questo caso il trucco vale
+		% If we have exactly r multiplicators we are in the first case,
+		% so we can skip all the zero elements on the row k (as well
+		% as the multiplicators).
 		if k <= n - dimBanda
-A( k + 1: end , k + 1: k + dimBanda ) = A( k + 1: end , k + 1: k + dimBanda ) + (- A ( k +1: end , k )* A (k , k +1: k + dimBanda ));
-		else %% qui non vale più
-A ( k +1: end , k +1: end ) = A ( k +1: end , k +1: end ) + (- A ( k +1: end , k )* A (k , k +1: end ));
+% This counts also the zero multiplicators.
+%A (k + 1 : end, k + 1 : k + dimBanda) = A (k + 1 : end, k + 1 : k + dimBanda) + (- A ( k + 1: end, k) * A (k, k + 1 : k + dimBanda));
+
+% This seems to work as well ans seems more efficient.
+% Try the following A with both instructions: A = [ 3 4 0 0; 1 4 1 0; 0 2 3 4; 0 0 1 3]; r = 1
+A (k + 1 : k + dimBanda, k + 1 : k + dimBanda) = A (k + 1 : k + dimBanda, k + 1 : k + dimBanda) + (- A ( k + 1: k + dimBanda, k) * A (k, k + 1 : k + dimBanda));
+		% If we are in the other case, we must go through all the
+		% multiplicators because the structure of the original matrix
+		% gets "destroyed", so we don't have any information of where
+		% the zeros are on the rows. Can we do something more here?
+		else
+A ( k + 1 : end, k + 1: end) = A (k + 1 : end, k + 1 : end) + (- A (k + 1 : end, k) * A (k, k + 1 : end));
 	 	end;
   	end;
 end;
