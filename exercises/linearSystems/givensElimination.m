@@ -1,13 +1,13 @@
-function [A, G, c, s] = givensElimination(A, i, j);
+function [B, G, c, s] = givensElimination(A, i, j);
 
 [m,n] = size(A);
-[c,s] = rotateGivens( A(j,j), A(i,j));
+[c,s] = rotate( A(j,j), A(i,j));
 
 G = eye(m);
-G(i,i) = c;
-G(i,j) = s;
-G(j,i) = -s;
 G(j,j) = c;
+G(j,i) = s;
+G(i,j) = -s;
+G(i,i) = c;
 
 tol = eps * norm(A,inf);
 

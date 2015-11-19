@@ -8,14 +8,20 @@ Q = eye(m);
 
 %% We have to obtain an R matrix upper triangular.
 %% to do this, we have to rotate the A matrix in order to have zeroes below the main diagonal.
-for j = 1 : r
-  for i = j+1 : m
-    [A, G, c, s] = givensElimination(A, i, j);
+for i = 1 : r
+  for j = i+1 : m
+    G = eye(m);
+    [A, c, s] = givensExample(i, j, A);
+    G(i,i) = c;
+    G(i,j) = s;
+    G(j,i) = -s;
+    G(j,j) = c;
     Q = Q * G;
   end;
 end;
 
 R = triu(A);
+
 
 for i = 1 : min(m,n)
   if R(i,i) < 0 
