@@ -13,6 +13,7 @@ Octave instead and maybe even contribute to that project.
 
 ##Function file structure
 
+```
   License notice
   
   
@@ -33,9 +34,9 @@ Octave instead and maybe even contribute to that project.
   
   C: Consequence[s]
   
-
-  Function code
   
+  Function code
+```
 ##License
 
 Every file in this repository is covered by the WTFPL. We decided not to use 
