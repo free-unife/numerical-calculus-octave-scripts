@@ -33,14 +33,13 @@ for k = 2 : n
 	% If the following is true it means that input matrix A doesn't have
 	% some of the stated proprieties so it cannot be solved with Thomas's
 	% algorithm.
-	k
-	ind
 	if k ~= ind
-		error("Tridiagonal matrix A does not have a factorization with L and R lower and upper bi-diagonal matrices respectively.");
+		error ('Tridiagonal matrix A does not have a factorization with L and R lower and upper bi-diagonal matrices respectively.');
 	end;
 
 	deter = deter * A (k, k);
-	% A has ...TODO...
+	% A has bi (upper diagonal), ci (lower diagonal) and di (main
+	% diagonal).
 	% R has ui (diagonal) and si (upper diagonal) elements.
 	% L has ones (diagonal) and li (lower diagonal).
 	% As usual, we are using compact forms so we overwrite (a copy
@@ -52,8 +51,7 @@ for k = 2 : n
 		% ui elements:
 		A (k, k) = A(k, k) + (- A (k, k - 1) * A (k - 1, k));
 	else
-		% Where is the division of something by A (k, k) ?
-    		error("Division by 0.");
+		error ('Zero in pivoting index would lead to a division by zero.');
 	end;
 end;
 

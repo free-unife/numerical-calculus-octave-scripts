@@ -7,7 +7,7 @@ function [G] = generateGivensMatrix(i,j,A);
 %% dunque il mio vettore sarà x = [A(1,1), A(2,1)] e voglio annullare l'elemento in posizione A(2,1)
 %% avendo G(i,j) il vettore è dunque x=[A(i,i), A(j,i)]
 
-[c,s] = e5rotation(A(i,i), A(j,i));
+[c,s] = rotateGivens (A(i,i), A(j,i));
 G = eye(m);
 G(i,i) = c;
 G(i,j) = s;
