@@ -1,17 +1,19 @@
-function [L, R, P , deter ]= gauss2mxn ( A );
-% fattorizzazione di Gauss con pivoting parziale - II versione
+% Copyright © 2015 Franco Masotti <franco.masotti@student.unife.it>
+%                  Danny Lessio
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the LICENSE file for more details.
+
+
+function [L, R, P, deter]= gauss2mxn (A);
+% [L, R, P, deter]= gauss2mxn (A);
 %
-% Ax = b
-% PAx = Pb
-% nota! PA = LR
-% LRx = Pb
-% Rx = y -> x = solUpper(R, y), prima dobbiamo ottenere y con solLower()
-% Ly = Pb -> prima di invocare solLower() dobbiamo riordinare b usando P
-% P in questo caso, NON È una matrice ma un vettore contenente lo storico delle permutazioni 
-% se b ha dimensione n*1, allora è possibile riordinarlo con un singolo comando: b = [b(P(1:n))]
-% eseguire quest'ultima operazione equivale a moltiplicare la matrice di permutazione P * b
-% ora possiamo:
-% Ly = b -> y = solLower(L, b)
+% Gauss factorization with partial pivoting for mxn matrices.
+%
+% I = { Matrix A mxn. }
+% P = {}
+% O = {}
+% C = {}
 
 
 [m, n] = size (A);
@@ -31,7 +33,7 @@ for k = 1: min( m-1, n )
   if k ~= ind
     aux = P(k);
     P(k) = P ( ind );
-    P(ind) = aux; 
+    P(ind) = aux;
     deter = -deter;
     temp = A ( ind ,:);
     A(ind,:) = A(k,:);
