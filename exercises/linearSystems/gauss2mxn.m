@@ -8,72 +8,92 @@
 function [L, R, P, deter]= gauss2mxn (A);
 % [L, R, P, deter]= gauss2mxn (A);
 %
-% Gauss factorization with partial pivoting for mxn matrices.
+% Gauss factorization with partial pivoting for mxn (non-squared) matrices.
 %
 % I = { Matrix A mxn. }
-% P = {}
-% O = {}
-% C = {}
+% P = { m <= n || m > n, nonzero pivoting elements. }
+% O = { L mxm matrix, R mxn matrix, P 1xm array, determinant deter. }
+% C = { L * R = A (P, :) which means P * A = L * R }
 
 
 [m, n] = size (A);
 deter = 1;
-temp = zeros (1 , n);
-P = 1: m ;
-tol = eps * norm (A , inf );
-L = eye(m,m);
-R = zeros(m,n);
+temp = zeros (1, n);
+P = 1 : m;
+tol = eps * norm (A, inf);
+L = eye (m, m);
+R = zeros (m, n);
 
-for k = 1: min( m-1, n )
-  %% trovo l'elemento massimo nella colonna corrente
-  [ amax , ind ] = max ( abs ( A ( k : m , k )));
-  %% trasformazione da indice vettore colonna a indice matrice (globale)
-  ind = ind +k -1;
-  %% se [amax, ind] non è in posizione pivot, allora scambio le righe di A
-  if k ~= ind
-    aux = P(k);
-    P(k) = P ( ind );
-    P(ind) = aux;
-    deter = -deter;
-    temp = A ( ind ,:);
-    A(ind,:) = A(k,:);
-    A (k ,:) = temp;
-  end ;
+% Set m as the row number and n as the column number.
+% We can determine two cases:
+%
+% First case:
+% m <= n -> k = 1 : m - 1
+%     |.1p. ... ... ... ... ...|
+%     |    .2p. ... ... ... ...|
+% R = |        .3p. ... ... ...|
+%     |            .mp. ... ...|
+% There is nothing under the last pivot (mp)
+% so we must stop before, that is at m-1.
+%
+% Second case:
+% m > n -> k = 1 : n
+%     |.1p. ... ... ...|
+%     |    .2p. ... ...|
+%     |        .3p. ...|
+% R = |            .np.|
+%     |                |
+%     |                |
+%     |                |
+% We must stop on the last pivot (np).
+%
+% Since the stucture of R is the same as A, and because we are using a compact
+% form of the algorithm, the previous statements are valid for A
+%
+% Find if A corresponds to the first or second case.
+for k = 1: min (m-1, n)
+% The following is the same as gauss2.m. Please refer to that file for
+% comments.
+	[amax, ind] = max (abs (A (k : m, k)));
+	ind = ind +k -1;
+	if k ~= ind
+		aux = P(k);
+		P (k) = P (ind);
+		P (ind) = aux;
+		deter = - deter;
+		temp = A (ind, :);
+		A (ind, :) = A (k, :);
+		A (k, :) = temp;
+	end;
+	deter = deter * A (k, k);
+	if abs (A (k, k)) > tol
+		A (k + 1 : end, k) = A (k + 1 : end, k) / A (k, k);
+		A (k + 1: end, k + 1 : end) = A (k + 1 : end, k + 1 : end ) + (- A (k + 1 : end, k) * A (k, k + 1 : end));
+	end;
+end;
 
-  % Il determinante si puo' ricavare dal rango.
-  % det (A) = ((-1) ^ #permutazioni) * R(1:1:n, 1:1:n)
-  deter = deter * A (k , k );
-  % Se il pivot NON tende a zero...
-  if abs ( A (k , k )) > tol
-    % ...allora posso fattorizzare con gauss
-    % creo i moltiplicatori di Lk^-1 ( L^-1 è la matrice di trasformazione elementare di gauss invertita).
-    % i moltiplicatori non hanno il segno - poichè, data una matrice triangolare inferiore con 1 sulla diagonale L,
-    % la sua inversa ha tutti gli elementi (tranne gli 1 sulla diagonale) invertiti di segno.
-    A( k +1: end , k ) = A ( k +1: end , k )/ A (k , k );
-    % Aggiorno la sottomatrice Atilde al passo k... come?
-    % prendiamo il vettore contenente i moltiplicatori generati al passo precedente ed aggiungiuamo il segno -
-    % successivamente con un prodotto tra vettore colonna ( moltiplicatori con -) e vettore riga ( k°esima riga senza pivot)
-    % e otteniamo una matrice contenente -mk volte la k riga, questa matrice si somma a quella originale.
-    A ( k +1: end , k +1: end ) = A ( k +1: end , k +1: end ) + (- A ( k +1: end , k )* A (k , k +1: end ));
-  end ;
-end ;
-
-% la triangolare superiore R è posizionata nella triangolare superiore di A modificata
-% R = DU
-%R = triu ( A );
-% L invece si trova nella parte trangolare inferiore di A, ma ha 1 sulla diagonale
-% L = L1^-1 * L2^-1 * Ln ^ -1 dove Li sono matrici di trasformazione elementare di gauss.
-%L = eye ( n )+ tril ( A (1: n ,1: n ) , -1);
-
+% L has size mxm but has the same structure as in gauss2.m.
 L = tril(A, -1);
 
-if( m > n)
-  deter = deter * A (n , n );
-  L = [L zeros(m,m-n)];
-  L = L + eye(m);
+% First case.
+if (m <= n)
+	% The last pivot is in A (m, m).
+	deter = deter * A (m, m);
+	% Keep the same number of rows but keep the first m columns.
+	% This is the same as doing L = L (1 : m, 1 : m);
+	L = L (:, 1 : m);
+	L = L + eye (m);
+% Second case.
 else
-  deter = deter * A(m , m);
-  L = L(1:m, 1:m);
-  L = L + eye(m);
-end
-R = triu( A ); 
+	% The last pivot is in A (n, n).
+	deter = deter * A (n , n);
+	% Add to L the missing columns so that it becomes squared.
+	L = [L, zeros(m, m - n)];
+	L = L + eye (m);
+end;
+
+% R is mxn so no resize operation is to be done.
+R = triu (A);
+
+
+end;
