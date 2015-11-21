@@ -11,6 +11,24 @@ instructions. These scripts, infact,  have only been trsted with GNU Octave, a
 free (as in freedom) version of Matlab. If you use Matlab you should switch to 
 Octave instead and maybe even contribute to that project.
 
+##Covered arguments
+
+- General Octave/Matlab training.
+- Linear systems solving
+  - Diagonal matrices.
+  - Lower matrices.
+  - Upper matrices.
+- Matrix factorization
+  - A = LR
+  - PA = LR
+    - Non square matrices.
+    - Band matrices with bandwidth r.
+    - Tridiagonal matrices using Thomas's algorithm.
+  - PAQ = LR
+  - A = QR (with Givens rotations)
+    - Hessenberg matrices.
+  - A = RQ (with Givens rotations)
+
 ##Function file structure
 
 ```
@@ -37,6 +55,7 @@ Octave instead and maybe even contribute to that project.
   
   Function code
 ```
+
 ##License
 
 Every file in this repository is covered by the WTFPL. We decided not to use 

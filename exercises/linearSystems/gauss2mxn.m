@@ -93,6 +93,8 @@ else
 end;
 
 % R is mxn so no resize operation is to be done.
+% If you want to solve a linear system you must resize R and y. You must delete
+% the last m-n rows of R and y. This is true in the second case.
 R = triu (A);
 
 

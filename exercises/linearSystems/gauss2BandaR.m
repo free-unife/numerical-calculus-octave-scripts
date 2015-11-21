@@ -5,8 +5,8 @@
 % as published by Sam Hocevar. See the LICENSE file for more details.
 
 
-function [L, R ,P, deter] = gauss2BandaR (A, r);
-% [L, R ,P, deter] = gauss2BandaR (A, r);
+function [L, R, P, deter] = gauss2BandaR (A, r);
+% [L, R, P, deter] = gauss2BandaR (A, r);
 %
 % Optimized version of Gauss factorization for band matrix with
 % bandwidth r. Patrial pivoting is used.
@@ -54,7 +54,7 @@ for k = 1: n -1
 		A (k, :) = temp;
 	end;
 
-	deter = deter * A (k , k );
+	deter = deter * A (k , k);
 	if abs (A (k, k)) > tol
 		% Here we find our multiplicators, i.e. the factorization
 		% matrix L.

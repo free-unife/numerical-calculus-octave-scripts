@@ -5,8 +5,8 @@
 % as published by Sam Hocevar. See the LICENSE file for more details.
 
 
-function [c, s] = rotateGivens (x1, x2);
-% [c, s] = rotateGivens (x1, x2);
+function [c, s] = rotateClockwise (x1, x2);
+% [c, s] = rotateClockwise (x1, x2);
 %
 % Calculates sine and cosine from given x1 and x2 elements.
 %
@@ -45,6 +45,10 @@ function [c, s] = rotateGivens (x1, x2);
 % C = { c = x1 / sqrt (x1^2 + x2^2), s = x2 / sqrt (x1^2 + x2^2),  yj = -s * xi
 % + c * xj = 0 }
 
+if x2 == 0
+	c = 1;
+	s = 0;
+end;
 
 c = x1 / sqrt (x1^2 + x2^2);
 s = x2 / sqrt (x1^2 + x2^2);
