@@ -1,3 +1,8 @@
+% Copyright © 2015 Franco Masotti <franco.masotti@student.unife.it>
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the LICENSE file for more details.
+
 function [n_b2] = convert (n, b1, b2);
 % [n_b2] = convert (n, b1, b2);
 %
