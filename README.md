@@ -14,6 +14,8 @@ Octave instead and maybe even contribute to that project.
 ##Covered arguments
 
 - General Octave/Matlab training.
+- Number conversions
+  - From base b1 to base b2.
 - Linear systems solving
   - Diagonal matrices.
   - Lower matrices.
