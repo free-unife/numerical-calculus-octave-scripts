@@ -31,4 +31,3 @@ else
 	error ("Input matrix A is singular.");
 end;
 
-end;

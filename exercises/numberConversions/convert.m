@@ -24,23 +24,40 @@ end;
 % Generate b1 and b2 symbol arrays.
 b1Sym = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
 b2Sym = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
-
-%n = str2num(n);
+acceptedSymbols = [ '.', '+', '-' ];
 
 % Check if input number is valid, i.e. if each element of n is in the symbols
 % array.
 for i = 1 : length (n)
 	% Get the elements until b1 - 1.
-	if n (i) ~= b1Sym (1 : b1)
+	if n (i) ~= b1Sym (1 : b1) && n (i) ~= acceptedSymbols
 		error ('Invalid number.');
 	end;
+end;
+
+n2Int = '';
+% Isolate the integer part.
+for i = 1 : length (n)
+	if n (i) ~= '.'
+		n2Int = strcat (n2Int, n (i));
+	% Stop at the decimal point.
+	else
+		break
+	end;
+end;
+
+% i now contains the index of the decimal point.
+i = i + 1;
+
+n2Fract = '';
+% Isolate the fractional part...
+for i = i : length (n)
+	n2Fract = strcat (n2Fract, n (i));
 end;
 
 % Output must be a string.
 n_b2 = ''
 
-% Isolate the integer part...
-% n2Int = ?
 
 % Convert the integer part.
 %while  ? ~= 0
