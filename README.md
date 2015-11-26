@@ -41,8 +41,7 @@ Octave instead and maybe even contribute to that project.
   
   
   Function prototype
-  
-  
+    
   Function prototype (printable)
   
   Brief description of what the function does
@@ -50,11 +49,8 @@ Octave instead and maybe even contribute to that project.
   [Explanation of mathematical theory]
   
   I: Input[s]
-  
   P: Propriety[es] of input P
-  
   O: Output[s]
-  
   C: Consequence[s]
   
   
