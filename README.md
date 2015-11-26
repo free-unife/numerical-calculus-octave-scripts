@@ -15,6 +15,8 @@ Octave instead and maybe even contribute to that project.
 
 - General Octave/Matlab training.
 - Error evaluations.
+  - Relative and absolute errors.
+  - Condition number of square matrices.
 - Number conversions
   - From base b1 to base b2.
 - Linear systems solving
