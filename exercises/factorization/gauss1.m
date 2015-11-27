@@ -27,7 +27,7 @@ for k=1:n-1
 	% If there is a zero in pivoting position...
 	if abs (A (k, k)) < eps * norm (A, inf);
 		% ... the algorithm must stop.
-		error ('Cannot factorize matrix A.')
+		error ('Cannot factorize matrix A. Machine precision zero in pivoting position.')
 	else
 		% Get the multiplier.
 		A (k + 1 : n, k) = A (k + 1 : n, k) ./ A (k, k);
@@ -42,11 +42,11 @@ end;
 % If the last pivot: A (n, n) != 0, then A is non-singular (i.e. it has the
 % inverse).
 deter = prod (diag (A));
-if (deter ~= 0)
-	fprintf ('Matrix A is NOT singular.\n');
-else
-	fprintf ('Matrix A is singular.\n');
-end;
+%if (deter ~= 0)
+%	fprintf ('Matrix A is NOT singular.\n');
+%else
+%	fprintf ('Matrix A is singular.\n');
+%end;
 
 % R is simply the upper triangular part of A.
 R = triu (A);
