@@ -44,6 +44,11 @@ for k = 1: n -1
     % creo i moltiplicatori di Lk^-1 ( L^-1 è la matrice di trasformazione elementare di gauss invertita).
     % i moltiplicatori non hanno il segno - poichè, data una matrice triangolare inferiore con 1 sulla diagonale L,
     % la sua inversa ha tutti gli elementi (tranne gli 1 sulla diagonale) invertiti di segno.
+    %
+    % Partial pivoting guarantees that abs(multipliers) are <= 1. his is true
+    % thanks to the pivoting. Infact the biggest element on the current
+    % column is chosen so we do: element / maxOfColumn which will always be
+    % <= 1.
     A ( k +1: end , k ) = A ( k +1: end , k )/ A (k , k );
     % Aggiorno la sottomatrice Atilde al passo k... come?
     % prendiamo il vettore contenente i moltiplicatori generati al passo precedente ed aggiungiuamo il segno -
