@@ -1,1 +1,0 @@
-../linearSystems/solDiag.m

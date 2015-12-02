@@ -33,6 +33,9 @@ Octave instead and maybe even contribute to that project.
   - A = QR (with Givens rotations)
     - Hessenberg matrices.
   - A = RQ (with Givens rotations)
+- Iterative methods
+  - Iacobi.
+  - Gauss Seidel.
 
 ##Function file structure
 

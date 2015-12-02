@@ -15,9 +15,9 @@ if spectrum >= 1
 end;
        
 % Convergence speed.
-convSpeed = - log (spectrum);
-% Number of oteration to reduce initial error of 1/e (where e is native e 
-% variable).
+convSpeed = - log10 (spectrum);
+% Number of iteration to reduce initial error of 1/10, i.e. to have 1 decimal 
+% digit correct. In order to have n decimal digits correct you must multiply 
+% this number by n.
 % This number is used to compare different methods.
 it_To_Reduce_Init_Err_Of_1_Over_e = 1 / convSpeed;
-
