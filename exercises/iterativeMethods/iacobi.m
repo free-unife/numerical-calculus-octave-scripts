@@ -1,9 +1,13 @@
-function [x, iterations] = iacobi (A, b)
-% [x, iterations] = iacobi (A, b)
+function [x, iterations] = iacobi (A, b, precision)
+% [x, iterations] = iacobi (A, b, precision)
 %
 % Apply Iacobi's method to find the solutions of a linear system.
+%
+% I = { precision is the number of decimal digits without error. }
+% P = {}
+% O = {}
+% C = {}
 
-%format long
 
 [rows, cols] = size (A);
 
@@ -28,22 +32,24 @@ J = invD * (L + U);
 c = invD * b;
 
 G = J;
-% Check if matrix is converging and find other iteresting facts.
-convSpeedStep (G);
+% Check if matrix is converging.
+[trash, trash, iteration] = convSpeedStep (G);
+maxIterations = abs (round (iteration) * precision);
 
+% Some matrices will not convergew even if the spectrum is less than one.
+% For this reason we should set a variable corresponding to the maximum
+% iterations.
 i = 0;
 while true
 	xPrev = x;
 	x = (J * x) + c;
 	i = i + 1;
 	% If the following is true the iterative process must be stopped.
-	% This is true because that norm tends to the zero machine precision 
+	% This is true because that norm tends to the zero machine precision
 	% number.
-	if norm (xPrev - x, Inf) < eps * norm (x, Inf)
+	if (norm (xPrev - x, Inf) < eps * norm (x, Inf)) || (i == maxIterations)
 		break;
 	end;
 end;
 
 iterations = i;
-
-%format

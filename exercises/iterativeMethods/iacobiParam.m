@@ -3,8 +3,6 @@ function [x, iterations] = iacobiParam (A, b, omega)
 %
 % Apply Iacobi's method to find the solutions of a linear system.
 
-%format long
-
 [rows, cols] = size (A);
 
 % Define our x array.
@@ -22,10 +20,10 @@ for i = 1 : rows
 end;
 
 c = omega * invD * b;
-J = eye(rows) - (omega * invD * A);
+J = eye (rows) - (omega * invD * A);
 
 G = J;
-[spectrum,trash,trash] = convSpeedStep (G);
+convSpeedStep (G);
 
 i = 0;
 while true
@@ -41,5 +39,3 @@ while true
 end;
 
 iterations = i;
-
-%format

@@ -23,7 +23,7 @@ invL = invTril (L);
 Gs = invL * U;
 c = invL * b;
 
-% Find G in a different way by avoiding useless operation (multiplications and 
+% Find G in a different way by avoiding useless operation (multiplications and
 % sums by zero).
 %Gs = zeros (rows);
 %for i=1:rows
