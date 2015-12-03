@@ -1,4 +1,4 @@
-function [convSpeed, it_To_Reduce_Init_Err_Of_1_Over_e] = convSpeedStep (G)
+function [spectrum, convSpeed, it_To_Reduce_Init_Err_Of_1_Over_e] = convSpeedStep (G)
 %
 %
 % Check if input matrix is converging. If it's not, we can't apply any(?) 
