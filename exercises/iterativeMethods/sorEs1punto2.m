@@ -34,7 +34,7 @@ for omega = 0 : 0.1 : 2
 			break;
 		end;
 	end;
-	Er  = [Er, norm(xExact - x, Inf)/norm(x, Inf)];
+	Er  = [Er, norm(xExact - x, Inf)/norm(xExact, Inf)];
 	evec = [evec, Er];
 	iterations = i;
 end;

@@ -1,7 +1,6 @@
-function [x, iterations, Er] = sorEs1punto1 (A, b, omega)
-% [x, iterations, Er] = sor (A, b, omega)
-%
-% Apply Iacobi's method to find the solutions of a linear system.
+A = [7 6 10 6; 6 8 8 6; 10 8 16 10; 6 6 10 9];
+b = [56 50 86 57]';
+precision = 100;
 
 [rows, cols] = size (A);
 
@@ -10,23 +9,8 @@ x = zeros (rows, 1);
 
 D = diag (diag (A));
 
-if omega == 'NULL'
-
-	% Find some components.
-	L = tril (A);
-	U = - triu (A, 1);
-	invL = invTril (L);
-
-	% Find Gauss Siedel matrix.
-	Gs = invL * U;
-	c = invL * b;
-
-	G = Gs;
-	[spectrum,trash,trash] = convSpeedStep (G);
-
-	omega = 2 / (1 + sqrt (1 - spectrum));
-
-end;
+omega = 'NULL';
+sorOmegaNULL
 
 L = -tril (A, -1);
 U = - triu (A, 1);
@@ -34,23 +18,26 @@ U = - triu (A, 1);
 Gs = invTril (D - (omega * L)) * (((1 - omega) * D) + (omega * U));
 c = invTril (D - omega * L) * omega * b;
 
-[spectrum, trash, trash] = convSpeedStep (Gs);
-fprintf ('Optimal omega = %g\n', omega);
+G = Gs;
+[spectrum, trash, iteration] = convSpeedStep (G);
+maxIterations = abs (round (iteration) * precision);
 
 i = 0;
 Er = [];
 xExact = [2 1 3 1]';
 while true
 	xPrev = x;
-	x = (Gs * x) + c;
+	x = (G * x) + c;
 	i = i + 1;
-	Er  = [Er, norm(xExact - x, Inf)/norm(x, Inf)];
+	Er  = [Er, norm(xExact - x, Inf) / norm(xExact, Inf)];
 	% If the following is true the iterative process must be stopped.
 	% This is true because that norm tends to the zero machine precision 
 	% number.
-	if norm (xPrev - x, Inf) < eps * norm (x, Inf) || i == 10000
+	if norm (xPrev - x, Inf) < eps * norm (x, Inf) || (i == maxIterations)
 		break;
 	end;
 end;
 
 iterations = i;
+
+plot (1 : iterations, Er); 

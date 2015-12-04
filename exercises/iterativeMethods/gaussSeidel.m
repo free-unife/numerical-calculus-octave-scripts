@@ -1,5 +1,5 @@
-function [x, iterations] = gaussSeidel (A, b)
-% [x, iterations] = gaussSeidel (A, b)
+function [x, iterations] = gaussSeidel (A, b, precision)
+% [x, iterations] = gaussSeidel (A, b, precision)
 %
 % Apply Gauss Siedel's method to find the solutions of a linear system.
 % 
@@ -38,19 +38,9 @@ c = invL * b;
 
 G = Gs;
 % Check if matrix is converging and find other iteresting facts.
-convSpeedStep (G);
+[trash, trash, iteration] = convSpeedStep (G);
+maxIterations = abs (round (iteration) * precision);
 
-i = 0;
-while true
-	xPrev = x;
-	x = (Gs * x) + c;
-	i = i + 1;
-	% If the following is true the iterative process must be stopped.
-	% This is true because that norm tends to the zero machine precision 
-	% number.
-	if norm (xPrev - x, Inf) < eps * norm (x, Inf)
-		break;
-	end;
-end;
+iterativeLoop
 
 iterations = i;

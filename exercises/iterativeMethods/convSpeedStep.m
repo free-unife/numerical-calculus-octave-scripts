@@ -11,7 +11,7 @@ function [spectrum, convSpeed, numIterations] = convSpeedStep (G)
 spectrum = max (abs (eig (G)));
 
 if spectrum >= 1
-%        error ('Non converging matrix.');
+        error ('Non converging matrix.');
 end;
 
 % Convergence speed.
