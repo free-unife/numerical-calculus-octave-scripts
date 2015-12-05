@@ -11,7 +11,14 @@ instructions. These scripts, infact, have only been trsted with GNU Octave, a
 free (as in freedom) version of Matlab. If you use Matlab you should switch to 
 Octave instead and maybe even contribute to that project.
 
-Fell free to contribute.
+Before writing these scripts and functions, there is (usually) a certain amount 
+of paper work to be done, i.e. getting paper and pen and, while reading codes 
+or theory, think and write about what, why and how it's done. This means that 
+to fully understand what is going on you should spend some time on it, unless 
+you are very good at maths :) and you can grasp all the comcepts at first 
+glance.
+
+Fell free to contribute to this repository.
 
 ##Covered arguments
 
@@ -40,6 +47,8 @@ Fell free to contribute.
   - Gauss Seidel.
   - Parametrized Iacobi.
   - SOR.
+- Interpolation
+  - Lagrange polynomial.
 
 ##Function file structure
 

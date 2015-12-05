@@ -37,10 +37,7 @@ c = invL * b;
 %end
 
 G = Gs;
-% Check if matrix is converging and find other iteresting facts.
-[trash, trash, iteration] = convSpeedStep (G);
-maxIterations = abs (round (iteration) * precision);
-
+getMaxIterations
 iterativeLoop
 
 iterations = i;

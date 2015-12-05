@@ -1,7 +1,7 @@
 function [x, iterations] = iacobiParam (A, b, precision, omega)
 % [x, iterations] = iacobiParam (A, b, precision, omega)
 %
-% Apply Iacobi's method to find the solutions of a linear system.
+% Apply relaxed Iacobi method to find the solutions of a linear system.
 
 [rows, cols] = size (A);
 
@@ -11,15 +11,13 @@ x = zeros (rows, 1);
 % Find some components.
 D = diag (diag (A));
 
-diagInv
+invD = diagInv (D);
 
 c = omega * invD * b;
 J = eye (rows) - (omega * invD * A);
 
 G = J;
-[trash, trash, iteration] = convSpeedStep (G);
-maxIterations = abs (round (iteration) * precision);
-
+getMaxIterations
 iterativeLoop
 
 iterations = i;

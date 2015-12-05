@@ -10,7 +10,7 @@ x = zeros (rows, 1);
 D = diag (diag (A));
 
 omega = 'NULL';
-sorOmegaNULL
+findOmega
 
 L = -tril (A, -1);
 U = - triu (A, 1);
