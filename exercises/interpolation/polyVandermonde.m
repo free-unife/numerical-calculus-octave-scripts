@@ -23,22 +23,22 @@ function [p, a] = polyVandermonde (x, y, evalPoints);
 
 [xRows, xCols] = size(x);
 [yRows, yCols] = size(y);
-
 if xCols ~= yCols || (xRows ~= 1 && yRows ~= 1)
 	error ('Size mismatch.');
 end;
 
+n = xCols;
+
+% We will solve a linear system later so we need column vectors.
 x = x';
 y = y';
 
-n = xCols;
-
 % Find the Vandermonde matrix.
 V = zeros (n);
-
 for i = 1 : n
 	V (i, 1 : n) = x (i) .^ (0 : n - 1);
 end;
+
 % The following for loop has the same effect as the latter.
 %for i = 1 : n
 %	for k = 1 : n
@@ -46,11 +46,16 @@ end;
 %	end;
 %end;
 
-% Linear system resolution of V to find a.
+% Linear system resolution of V to find a, i.e:
+% V * a = y. LR (Gauss method without pivoting is applied) since it's simpler
+% to handle.
 [Lg, Rg, deter] = gauss1 (V);
 yg = solLower (Lg, y);
 a = solUpper (Rg, yg);
 
+% Since the coefficient vector is a column vector it is simpler if we transpose
+% it so we can do the product between each element of a and the current
+% evalPoint.
 a = a';
 for k = 1 : length (evalPoints)
 	pv = 0;
@@ -58,5 +63,6 @@ for k = 1 : length (evalPoints)
 		pv = pv + (a (i) * (evalPoints(k) ^ (i - 1)));
 	end;
 
+	% pv is the value of the polynomial in (the current) evalPoint.
 	p (k) = pv;
 end;
