@@ -48,6 +48,7 @@ Fell free to contribute to this repository.
   - Parametrized Iacobi.
   - SOR.
 - Interpolation
+  - Interpolation using Vandermonde matrix.
   - Lagrange polynomial.
 
 ##Function file structure

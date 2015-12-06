@@ -14,7 +14,8 @@
 
 
 % Some matrices will not converge even if the spectrum is less than one.
-% For this reason a variable corresponding to the maximum iterations is set.
+% For this reason a variable corresponding to the maximum iterations
+% (previously calculated) is set as one of the conditions.
 
 i = 0;
 while true

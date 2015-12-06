@@ -25,12 +25,12 @@ end;
 
 % Calculate the polynomial value with each evaluation point.
 for k = 1 : length (evalPoints)
-	ij = find (evalPoints (k) == x)
+	ij = find (evalPoints (k) == x);
 	if isempty (ij)
-		temp = prod (evalPoints (k) - x)
-		p (k) = temp * sum (a ./ (evalPoints (k) - x))
+		temp = prod (evalPoints (k) - x);
+		p (k) = temp * sum (a ./ (evalPoints (k) - x));
 	else
-		p (k) = y (ij(1))
+		p (k) = y (ij(1));
 	end;
 end;
 

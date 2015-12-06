@@ -1,3 +1,16 @@
+% Copyright © 2015 Franco Masotti <franco.masotti@student.unife.it>
+%                  Danny Lessio
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the LICENSE file for more details.
+
+
+% Script that plots the relative error between each iteration an the correct
+% solution xExact.
+% SOR method is applied.
+% As you can see the error decreases rapidly with the first few iterations,
+% then it stabilizes.
+
 A = [7 6 10 6; 6 8 8 6; 10 8 16 10; 6 6 10 9];
 b = [56 50 86 57]';
 precision = 100;
@@ -30,9 +43,6 @@ while true
 	x = (G * x) + c;
 	i = i + 1;
 	Er  = [Er, norm(xExact - x, Inf) / norm(xExact, Inf)];
-	% If the following is true the iterative process must be stopped.
-	% This is true because that norm tends to the zero machine precision 
-	% number.
 	if norm (xPrev - x, Inf) < eps * norm (x, Inf) || (i == maxIterations)
 		break;
 	end;
@@ -40,4 +50,4 @@ end;
 
 iterations = i;
 
-plot (1 : iterations, Er); 
+plot (1 : iterations, Er);

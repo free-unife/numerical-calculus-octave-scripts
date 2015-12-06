@@ -10,10 +10,12 @@ function [x, iterations] = iacobi (A, b, precision)
 %
 % Apply Iacobi's method to find the solutions of a linear system.
 %
-% I = { precision is the number of decimal digits without error. }
-% P = {}
-% O = {}
-% C = {}
+% I = { Coefficient matrix A, known terms b, precision is the number of wanted
+% decimal digits of x not affected by error. }
+% P = { A is a square matrix nxn, b is an nx1 array. }
+% O = { array of the solutions x, number of iterations iterations needed to
+% solve the linear system. }
+% C = { A * x = b. }
 
 
 [rows, cols] = size (A);
