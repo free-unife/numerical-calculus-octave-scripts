@@ -1,7 +1,13 @@
 function [p] = chebyshevPoly (ang, degree);
+% [p] = chebyshevPoly (ang, degree);
 %
+% Find Chebyshev polynomial with the direct formula and iteratively. TODO 
+% coefficient output.
 %
-%
+% I = {}
+% P = {}
+% O = {}
+% C = {}
 
 
 if ang < -1 || ang > 1
@@ -19,22 +25,21 @@ elseif degree == 1
 end;
 
 % Direct value calculation.
-t = cos (degree * theta)
+t = cos (degree * theta);
 
-% Iterative method to find the coefficients TODO.
-tPrev = 1;
-t = 1;
+% Iterative method to find the coefficients.
 x = cos (theta);
+tPrevPrev = 1;
+tPrev = 1;
 
 i = 2;
-t = (2 * cos ((i - 1) * theta) * cos (theta) * t) - tPrev
+t = (2 * cos ((i - 1) * theta) * cos (theta) * tPrev) - tPrevPrev
 
-tPrev = ang;
+tPrev = t;
+tPrevPrev = ang;
 for i = 3 : degree
-	t = (2 * x * t) - tPrev
-	%t = (2 * cos ((i - 1) * theta) * cos (theta) * t) - tPrev
-
-%	t = (2**t) - tPrev
-%	t = (2 * cos ((i) * theta) - cos ((i - 1) * theta))
+	t = (2 * x * tPrev) - tPrevPrev
+	tPrevPrev = tPrev;
+	tPrev = t;
 end;
 p = t;
