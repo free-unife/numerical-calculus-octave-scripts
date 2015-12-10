@@ -20,14 +20,6 @@ function [p] = lagrangePolySimpler (x, y, evalPoints);
 
 n = length (x);
 p = zeros (size (evalPoints));
-%a = ones (size (evalPoints));
-
-% Get the coefficients.
-% Look at lagrangePoly.m for more info.
-%for i = 1 : length (y)
-        % Skip step when i == k.
-%	a (i) = y (i) / prod (x (i) - x ([1 : i - 1, i + 1 : length(y)]));
-%end;
 
 for k = 1 : n
 	% lagrangeBase is the array of the sum of all the lagrange bases (for

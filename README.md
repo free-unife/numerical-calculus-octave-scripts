@@ -50,6 +50,8 @@ Fell free to contribute to this repository.
 - Interpolation
   - Interpolation using Vandermonde matrix.
   - Lagrange polynomial.
+  - Chebyshev polynomial.
+  - Chebishev nodes.
 
 ##Function file structure
 

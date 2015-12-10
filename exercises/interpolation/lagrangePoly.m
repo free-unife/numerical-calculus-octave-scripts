@@ -18,6 +18,7 @@ p = zeros (size (evalPoints));
 % where a is the coefficient array,
 % y is the array of the known values.
 % X is the matrix of the Ls (plural L).
+% The following are not the real coefficients... TODO
 for i = 1 : n1
 	% Skip step when i == k.
 	%
