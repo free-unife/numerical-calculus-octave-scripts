@@ -5,9 +5,10 @@
 
 
 function [p] = lagrangePolySimpler (x, y, evalPoints);
-%  [p] = lagrangePolySimpler (x, y, evalPoints);
+% [p] = lagrangePolySimpler (x, y, evalPoints);
 %
-% Calculate Lagrange polynomials using Lagrange bases.
+% Build and evaluate the Lagrange polynomial (of degree = length (x) - 1),
+% using Lagrange bases, for every element of evalPoints.
 %
 % I = { array x = observation points, array y = observed data at
 % observation points x, array evalPoints represents the set of points where
@@ -34,7 +35,7 @@ for k = 1 : n
 	for i = [1 : k - 1, k + 1 : n]
 		lagrangeBase = ((evalPoints - x (i)) ./ (x(k) - x(i))) .* lagrangeBase;
 	end;
-	% Calculatate the value of the polynom.
+	% Calculatate the value of the polynomial.
 	% pn (x) = y0 * L0(x) + y1 * L1 (x) + ... yn * Ln (x).
-	p = p + (lagrangeBase * y (k))
+	p = p + (lagrangeBase * y (k));
 end;

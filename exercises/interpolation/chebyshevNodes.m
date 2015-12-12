@@ -1,13 +1,20 @@
+% Copyright © 2015 Franco Masotti <franco.masotti@student.unife.it>
+%                  Danny Lessio
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the LICENSE file for more details.
+
+
 function [x] = chebyshevNodes (a, b, n);
 % function [x] = chebyshevNodes (a, b, n);
 %
-% Find Chebyshev polynomial with the direct formula and iteratively. TODO 
-% coefficient output.
+% Find the n Chebyshev nodes x in the interval [a, b] by applying directly the 
+% formula.
 %
-% I = { a = min, b = max, n = node number = degree + 1. }
-% P = {}
-% O = {}
-% C = {}
+% I = { a = interval lower bound, b = interval upper bound, n = node number. }
+% P = { n = node number = degree + 1. }
+% O = { x is an array containing the n Chebyshev nodes. }
+% C = { x is 1xn. }
 
 
 x = zeros (1, n);

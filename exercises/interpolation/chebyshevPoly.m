@@ -1,13 +1,19 @@
-function [p] = chebyshevPoly (ang, degree);
-% [p] = chebyshevPoly (ang, degree);
+% Copyright © 2015 Franco Masotti <franco.masotti@student.unife.it>
+% This work is free. You can redistribute it and/or modify it under the
+% terms of the Do What The Fuck You Want To Public License, Version 2,
+% as published by Sam Hocevar. See the LICENSE file for more details.
+
+
+function [t] = chebyshevPoly (ang, degree);
+% [t] = chebyshevPoly (ang, degree);
 %
-% Find Chebyshev polynomial with the direct formula and iteratively. TODO 
-% coefficient output.
+% Find Chebyshev polynomial value t (with the direct trigonometric formula) 
+% for an angle ang and a degree degree.
 %
-% I = {}
-% P = {}
-% O = {}
-% C = {}
+% I = { angle ang, polynomial degree degree. }
+% P = { -1 <= ang <= 1 where ang is expressed in radians. }
+% O = { evaluated polynomial t. }
+% C = { -1 <= t <= 1. }
 
 
 if ang < -1 || ang > 1
@@ -16,30 +22,4 @@ end;
 
 theta = acos (ang);
 
-if degree == 0
-	p = 1;
-	return
-elseif degree == 1
-	p = ang;
-	return
-end;
-
-% Direct value calculation.
 t = cos (degree * theta);
-
-% Iterative method to find the coefficients.
-x = cos (theta);
-tPrevPrev = 1;
-tPrev = 1;
-
-i = 2;
-t = (2 * cos ((i - 1) * theta) * cos (theta) * tPrev) - tPrevPrev
-
-tPrev = t;
-tPrevPrev = ang;
-for i = 3 : degree
-	t = (2 * x * tPrev) - tPrevPrev
-	tPrevPrev = tPrev;
-	tPrev = t;
-end;
-p = t;

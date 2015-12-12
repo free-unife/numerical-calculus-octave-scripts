@@ -1,5 +1,6 @@
 # numerical-calculus-octave-scripts
-Exercises in Octave/Matlab (m files).
+Octave/Matlab functions and scripts related to "Calcolo Numerico e Laboratorio" 
+course in UNIFE (University of Ferrara), year 2015-2016.
 
 ##What this repository is about
 
@@ -7,9 +8,10 @@ This repository is a collection of Octave/Matlab scripts and functions
 which you can freely use.
 
 To be able to run these scripts with Matlab you may need to change some 
-instructions. These scripts, infact, have only been trsted with GNU Octave, a 
+instructions. These scripts, infact, have only been tested with GNU Octave, a 
 free (as in freedom) version of Matlab. If you use Matlab you should switch to 
-Octave instead and maybe even contribute to that project.
+[Octave](http://www.fsf.org/campaigns/priority-projects/gnu-octave-free-software-matlab-replacement) 
+instead and maybe even contribute to that project.
 
 Before writing these scripts and functions, there is (usually) a certain amount 
 of paper work to be done (i.e. getting paper and pen and, while reading codes 
@@ -50,8 +52,10 @@ Fell free to contribute to this repository.
 - Interpolation
   - Interpolation using Vandermonde matrix.
   - Lagrange polynomial.
-  - Chebyshev polynomial.
-  - Chebishev nodes.
+  - Chebyshev polynomial
+    - Trigonometric formula.
+    - Iterative formula.
+  - Chebyshev nodes.
 
 ##Function file structure
 
