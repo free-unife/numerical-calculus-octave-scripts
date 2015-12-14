@@ -56,6 +56,8 @@ Fell free to contribute to this repository.
     - Trigonometric formula.
     - Iterative formula.
   - Chebyshev nodes.
+  - Divided differences.
+  - Newton polynomial.
 
 ##Function file structure
 
