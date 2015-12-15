@@ -24,7 +24,7 @@ close all
 syms x
 % Calculate the original function. This is done once because it remains the
 % same throughout every iteration.
-func = cos (x) / (cos (x) + (4 * sin (x)) + 5);
+func = cos (x) ./ (cos (x) + (4 * sin (x)) + 5);
 
 % Lagrange polynomial degrees.
 degrees = [2, 5, 10, 20 ,30];
@@ -39,7 +39,7 @@ for i = 1 : 1 : length (degrees)
 	% Equally spaced elements between -2pi and pi. Each iteration we must
 	% have degree(i) + 1 points.
 	observationX = linspace (-2 * pi, pi, degrees (i) + 1);
-	observationY = cos (observationX) / (cos (observationX) + (4 * sin (observationX)) + 5);
+	observationY = cos (observationX) ./ (cos (observationX) + (4 * sin (observationX)) + 5);
 	% Interpolation points plot.
 	plot (observationX,  observationY, '*');
 
@@ -52,7 +52,7 @@ for i = 1 : 1 : length (degrees)
 	% Find the Chebyshev nodes in [-2*pi, pi] interval.
 	% degree (i) + 1 nodes, just like before.
 	chebNodes = chebyshevNodes (-2 * pi, pi, degrees (i) + 1);
-	chebY = cos (chebNodes) / (cos (chebNodes) + (4 * sin (chebNodes)) + 5);
+	chebY = cos (chebNodes) ./ (cos (chebNodes) + (4 * sin (chebNodes)) + 5);
 	[y2] = lagrangePoly (chebNodes, chebY, evalPoints);
 	% Lagrange evaluated polynomial plot using Chebyshev nodes.
 	plot (evalPoints, y2, 'g');
