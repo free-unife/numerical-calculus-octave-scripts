@@ -4,8 +4,8 @@
 % as published by Sam Hocevar. See the LICENSE file for more details.
 
 
-function [d] = divided_diffs_table (x, y);
-% [d] = divided_diffs_table (x, y);
+function [d] = dividedDiffsNewton (x, y);
+% [d] = dividedDiffsNewton (x, y);
 %
 % Function that calculates the diagonal of the table of the divided
 % differences. This is used because if we have a polynomial of degree n and we
@@ -13,7 +13,7 @@ function [d] = divided_diffs_table (x, y);
 % y(n+1)), we can use previous calculation (from degree 0 to n, to find n+1),
 % instead of recalculating everything (all n+1).
 %
-% I = { x and y are the arrays containing the interpolation points of Lagrange. }
+% I = { x and y are the arrays containing the interpolation points of Newton. }
 % P = { x = 1xn, y = 1xn. }
 % O = { d = diagonal of the table. }
 % C = { length (d) = length (x) = length (y) }
