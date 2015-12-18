@@ -60,6 +60,7 @@ Fell free to contribute to this repository.
     - For Newton's polynomial.
     - For Hermite's polynomial.
   - Newton polynomial.
+  - Hermite polynomial.
 
 ##Function file structure
 

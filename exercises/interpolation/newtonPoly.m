@@ -15,15 +15,15 @@ function [zeta, dd] = newtonPoly (x, y, evalPoints);
 % P = { x, y and evalPoins must be 1xn, 1xn and 1xm arrays respectively. All
 % elements in x must be distinct. }
 % O = { zeta is the array containing the value of the polynomial for each
-% evalPoint. }
-% C = { zeta is 1x(length (evalPoints). }
+% evalPoint, dd is the array of the divided differences. }
+% C = { zeta is 1x(length (evalPoints), d is 1xlength(x). }
 
 
 % TODO COMENTS.
 
 n = length (x);
-# In divided_diffs_table function there is the check for x and y input sizes.
-dd = divided_diffs_table (x, y);
+% In divided_diffs_table function there is the check for x and y input sizes.
+dd = dividedDiffsNewton (x, y);
 zeta = dd (n) * ones (size (evalPoints));
 
 for i = n - 1 : - 1 : 1
