@@ -59,7 +59,8 @@ Fell free to contribute to this repository.
   - Divided differences
     - For Newton's polynomial.
     - For Hermite's polynomial.
-  - Newton polynomial.
+  - Newton polynomial
+    - Piecewise interpolation.
   - Hermite polynomial.
 
 ##Function file structure
