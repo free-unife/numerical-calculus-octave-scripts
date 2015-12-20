@@ -45,9 +45,12 @@ for i = 0 : iterationNum
 	% correctly evaluate each polynomial.
         base = (degreeOfSubpolys * i) + 1;
         limit = base + degreeOfSubpolys;
-        % Avoids index overflows.
+        % Avoids index overflows, although the last polynomial will not have
+	% the correct degree if limit > #nodes.
         if limit > numberOfNodes
-                break
+		while limit ~= numberOfNodes
+			limit = limit - 1;
+		end;
         end;
 
 	% Choose the evalPoints in the sub-interval between base and limit.

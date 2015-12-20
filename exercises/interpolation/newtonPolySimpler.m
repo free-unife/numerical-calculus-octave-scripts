@@ -22,7 +22,7 @@ function [p] = newtonPolySimpler (x, y, evalPoints);
 
 n = length (x);
 p = zeros (1, length (evalPoints));
-# In dividedDiffs function there is the check for x and y input sizes.
+% In dividedDiffs function there is the check for x and y input sizes.
 dd = dividedDiffsNewton (x, y);
 
 for k = 1 : length (evalPoints)

@@ -23,7 +23,7 @@ figure
 
 % You can change the following variables and see what happens.
 degreeOfSubpolys = 3;
-numberOfPoints = 7;
+numberOfPoints = 15;
 evalPointsStep = 0.01;
 
 % Function definition. As you can notice, to have significant result input
