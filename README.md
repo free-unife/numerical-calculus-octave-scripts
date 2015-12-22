@@ -62,6 +62,8 @@ Fell free to contribute to this repository.
   - Newton polynomial
     - Piecewise interpolation.
   - Hermite polynomial.
+  - Splines
+    - Linear splines.
 
 ##Function file structure
 
