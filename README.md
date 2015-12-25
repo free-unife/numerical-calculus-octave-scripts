@@ -60,8 +60,11 @@ Fell free to contribute to this repository.
     - For Newton's polynomial.
     - For Hermite's polynomial.
   - Newton polynomial
+    - Standard interpolation.
     - Piecewise interpolation.
-  - Hermite polynomial.
+  - Hermite polynomial
+    - Standard interpolation.
+    - Piecewise cubic interpolation.
   - Splines
     - Linear splines.
 
