@@ -67,6 +67,7 @@ Fell free to contribute to this repository.
     - Piecewise cubic interpolation.
   - Splines
     - Linear splines.
+    - Cubic splines.
 
 ##Function file structure
 

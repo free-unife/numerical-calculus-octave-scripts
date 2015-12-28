@@ -5,15 +5,17 @@
 % as published by Sam Hocevar. See the LICENSE file for more details.
 
 
-function [s] = linearSpline (x, y, evalPoints)
+function [s] = linearSpline (x, y, evalPoints);
+% [s] = linearSpline (x, y, evalPoints);
 %
+% Evaluation of linear (degree = 1) splines in evalPoints.
 %
-% Evaluation of a linear (degree = 1) spline in evaPoints.
-%
-% I = {}
-% P = {}
-% O = {}
-% C = {}
+% I = { array of nodes x, array y of the values of the function in the nodes x,
+% evaluation points array evalPoints. }
+% P = { x = 1xn && ordered array, y = 1xn, evalPoints = 1xm. }
+% O = { s is the array of all the linear splines. }
+% C = { s = 1xlength(evalPoints). s(i) is the linear spline evaluated in
+% evalPoints(i). }
 
 
 for i = 1 : length (evalPoints)
