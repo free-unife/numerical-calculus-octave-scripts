@@ -7,15 +7,27 @@
 close all
 clear all
 
-x = linspace (-1,1,10)
-y = 1 ./ (1 + x.^2)
-initDer = (- 2 * x(1)) / (x(1)^2 + 1)^2
-finDer = (- 2 * x(end)) / (x(end)^2 + 1)^2
+pkg load all
 
-[C] = getCubicSplineCoeffs (x, y, initDer, finDer)
+x = linspace (-1,1,10);
+y = 1 ./ (1 + x.^2);
+initDer = (- 2 * x(1)) / (x(1)^2 + 1)^2;
+finDer = (- 2 * x(end)) / (x(end)^2 + 1)^2;
 
-evalPoints = [-0.9 -0.7 -0.5 -0.2 0.2 0.5 0.7 0.9];
-[p] = cubicSpline (C, x, evalPoints)
+% Since we know the function we can calculate the derivatives in every point so
+% that we can use piecewise Hermite interpolation and compare it to cubic
+% splines.
+wholeDers = (- 2 * x) ./ (x.^2 + 1).^2;
+
+[C] = getCubicSplineCoeffs (x, y, initDer, finDer);
+
+
+evalPoints = linspace (-0.99, 0.99, 1000);
+
+[p] = cubicSpline (C, x, evalPoints);
+[pH] = hermitePiecewiseInterp (x, y, wholeDers, evalPoints);
+% native Octave function.
+[S] = spline (x,y,evalPoints);
 
 % Real function.
 syms xx;
@@ -25,5 +37,7 @@ hold on;
 
 ezplot (fun, [-1 1]);
 plot (evalPoints, p, 'r');
+plot (evalPoints, pH, 'g');
+plot (evalPoints, S, 'm');
 
 hold off;

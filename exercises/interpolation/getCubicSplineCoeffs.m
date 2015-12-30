@@ -24,39 +24,40 @@ n = length (x);
 % The definition of h is: h(i) = x(i+1) - x(i) for i = 0 to n. The n
 % used in the code corresponds to n+1 (and 1 coresponds to 0) in the
 % slides. Indices have been adaped to be usable in Octave.
-h = x(2:n)-x(1:n-1)
+h = x(2:n)-x(1:n-1);
 
 % Main diagonal of T.
-tDiag = 2*(h(1:n-2)+h(2:n-1));
+tDiag = 2*(h(1:n-2)+h(2:n-1))';
 % Upper diagonal.
-tUpper = [0, h(1:n-3)];
+tUpper = [0, h(1:n-3)]';
 % Lower diagonal.
-tLower = [h(3:n-1), 0];
+tLower = [h(3:n-1), 0]';
 
 % T is a matrix part of: Tz = b system, where z are the
 % first derivatives.
 % This is used because T is a quasi-sparse matrix.
 % [-1 0 1] builds a tridiagonal matrix using the three vectors.
-T = spdiags ([tLower, tDiag, tUpper]', [-1, 0, 1], n-2, n-2)
+T = spdiags ([tLower, tDiag, tUpper], [-1, 0, 1], n-2, n-2);
 
 % Using the formula in the slides:
 % z (1 : n - 1) = (y (2 : n - 1) - y (1 : n - 2)) ./ h (1 : n - 2)
 % z (2 : n) = (y (3 : n) - y (2 : n - 1)) ./ h (2 : n - 1)
 b = (y (2 : n - 1) - y (1 : n - 2)) ./ h (1 : n - 2) .* h (2 : n - 1) + h (1 : n - 2) .* (y (3 : n) - y (2 : n - 1)) ./ h (2 : n - 1);
 
-% WHY THIS?
+% See slide 20 for this.
 b = 3 * b;
 
 % Since the first and last node are special cases we have to remove:
 % h (2) * z1 and h (n - 2) * z2 respectively.
 b (1) = b (1) - (firstNodeDer * h (2));
 b (n - 2) = b (n - 2) - (lastNodeDer * h (n - 2));
-b = b'
+% b is transformed into a column vector.
+b = b';
 
 % Linear system resolution to find the first derivative values z.
 z = T \ b;
-z = [firstNodeDer; z; lastNodeDer]
-z=z'
+z = [firstNodeDer; z; lastNodeDer];
+z = z';
 
 C = zeros (n - 1, 4);
 
