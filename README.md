@@ -68,6 +68,10 @@ Fell free to contribute to this repository.
   - Splines
     - Linear splines.
     - Cubic splines.
+- Approximation
+  - Linear regression
+    - Generic.
+    - Polynomial.
 
 ##Function file structure
 
