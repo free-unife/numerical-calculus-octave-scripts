@@ -25,6 +25,8 @@ Fell free to contribute to this repository.
 ##Covered arguments
 
 - General Octave/Matlab training.
+- Miscellaneous
+  - Horner's method to evaluate polynomials.
 - Error evaluations.
   - Relative and absolute errors.
   - Condition number of square matrices.

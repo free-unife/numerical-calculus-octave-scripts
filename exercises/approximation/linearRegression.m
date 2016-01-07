@@ -4,21 +4,35 @@
 % as published by Sam Hocevar. See the LICENSE file for more details.
 
 
-function [a, residue, r] = linearRegression (A, y);
+function [a, residue, singleResidues] = linearRegression (A, y);
+% [a, residue, singleResidues] = linearRegression (A, y);
 %
-% TOBEFINISHED.
+% Find the coefficients of a degree n-1 approximating polynomial (with
+% n = number of columns).
 %
-% I = { A = linear regression matrix, y = array of observed data. }
+% I = { A is the linear regression matrix, array y of observed data. }
+% P = { A = mxn, y = mx1. }
+% O = { a are the coefficients of the polynomial in decreasing degree order,
+% residue is the euclidean norm of singleResidues and represents how much the
+% solution is precise, singleResidues is the array of the single residues. }
+% C = { a = 1xn, residue = 1x1 , singleResidues = mx1. }
 
 
 [m, n] = size (A);
+% QR factorization is used.
 [Q, R] = qr (A);
 
 yTilde = Q' * y';
 
+% Solve the system R * a = y.
 a = R (1:n, 1:n) \ yTilde (1:n);
-r = Q * [zeros(n, 1); yTilde(n+1:m)];
-residue = norm (r, 2) ^ 2;
 
+% The following is the same as doing:
+% r = y - (A * a);
+singleResidues = Q * [zeros(n, 1); yTilde(n+1:m)];
+residue = norm (singleResidues, 2) ^ 2;
+
+% Set a to the correct vectorial size and order it in the correct way, so that
+% other functions can use this result directly.
 a = a';
 a = a (n : -1 : 1);
