@@ -7,8 +7,9 @@
 close all
 clear all
 
-% Script that shows an example of polynomial approximation using linear
-% regression method.
+% Script that shows an example of a canonical polynomial approximation using
+% linear regression method. In the second part a custom function is built
+% (instead of using the canonical polynomial).
 
 x = [0 : 0.25 : 3];
 y = [6.3806 7.1338 9.1662 11.5545 15.6414 22.7371 32.0696 47.0756 73.1596 111.4684 175.9895 278.5550 446.4441];
@@ -35,5 +36,37 @@ plot (x, y, 'b');
 % native functions coincide.
 plot (evalPoints, z1, 'r');
 plot (evalPoints, z0, 'g');
+
+hold off
+
+
+% Second part.
+
+% Custom function:
+% f(x) = f1*a1 + f2*a2 + f3*a3
+f1 = 1 ./ ((1 + x) .^ 2);
+f2 = 1 ./ ((1 + x) .^ 1);
+f3 = 1 ./ ((1 + x) .^ 0);
+
+% Since we have 3 functions, we have 3 unknowns, so the overall function degree
+% is 2.
+degree = 2;
+
+m = length (x);
+n = degree + 1;
+
+% Build the linear regression matrix.
+A = zeros (m, n);
+% Thanks to vectorial notation we can do the following.
+A = [f1', f2', f3'];
+
+[f] = linearRegression (A, y);
+[z2] = horner (f, evalPoints);
+
+figure
+
+hold on
+
+plot (evalPoints, z2, 'r');
 
 hold off
