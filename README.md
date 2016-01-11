@@ -74,6 +74,8 @@ Fell free to contribute to this repository.
   - Linear regression
     - Generic.
     - Polynomial.
+- Non-linear equations
+  - Bisection method.
 
 ##Function file structure
 
