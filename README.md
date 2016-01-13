@@ -76,6 +76,7 @@ Fell free to contribute to this repository.
     - Polynomial.
 - Non-linear equations
   - Bisection method.
+  - Fixed point method.
 
 ##Function file structure
 
