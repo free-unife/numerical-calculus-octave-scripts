@@ -7,25 +7,30 @@
 clear all
 close all
 
-
 % Script to test the fixed point method.
 
 
+format long
+
+% Find a very rough soluton of f(x) = 0 using bisection method.
 k = 0;
 
 fun = @(x) (x^3) + (4 * x^2) - 10;
 a = 1;
 b = 2;
-tol = 10^(-1);
-
-format long
 
 fprintf ('\n\nBisection Rsult:\n==========\n\n')
+tol = 10^(-1)
 [c, j] = bisect (fun, a, b, tol)
 
-tolerance = (1 / (2^j)) * (b - a)
+% Find much precise solutions using the fixed point method and a smaller
+% tolerance. The last gFun is the best one to arrive to the most correct
+% solution in the least number of steps (although it's difficult to set up in
+% the first place.
 maxIt = 32;
-tol = 10^-9
+fprintf('--------------------\n\n');
+accurateDecimalDigits = 9
+tol = 10 ^ (- accurateDecimalDigits)
 
 fprintf ('\n\ng fun 0:\n==========\n\n')
 gFun = @(x) x + ((x^3) + (4 * x^2) - 10);
