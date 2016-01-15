@@ -77,6 +77,7 @@ Fell free to contribute to this repository.
 - Non-linear equations
   - Bisection method.
   - Fixed point method.
+  - Newton's method.
 
 ##Function file structure
 

@@ -34,7 +34,7 @@ function [x, it] = fixedPoint (gFun, x0, tol, maxIt);
 % iterations maxIt. }
 % P = { xNext = gFun(xCurent), x0 = int 1x1, tol = int 1x1, maxIt = int 1x1. }
 % O = { x is a close approximation corresponding to f(x) = 0, it = number of
-% Iteration done to get the solution. }
+% iterations done to get the solution. }
 % C = { g(x) ~= x, it = int 1x1. }
 
 
