@@ -31,7 +31,10 @@ Fell free to contribute to this repository.
   - Relative and absolute errors.
   - Condition number of square matrices.
 - Number conversions
-  - From base b1 to base b2.
+  - Integers from base b1=10 to base b2.
+  - Floating between 0 and 1 from b1=10 to b2.
+  - From base b1 to base b2=10.
+  - From base b1 to base b2 (it covers all the previous cases).
 - Linear systems solving
   - Diagonal matrices.
   - Lower matrices.
@@ -39,11 +42,13 @@ Fell free to contribute to this repository.
 - Matrix factorization
   - A = LR
   - PA = LR
+    - Standard case.
     - Non square matrices.
     - Band matrices with bandwidth r.
     - Tridiagonal matrices using Thomas's algorithm.
   - PAQ = LR
   - A = QR (with Givens rotations)
+    - Standard case.
     - Hessenberg matrices.
   - A = RQ (with Givens rotations)
 - Iterative methods
