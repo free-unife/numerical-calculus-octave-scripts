@@ -1,8 +1,9 @@
 # numerical-calculus-octave-scripts
+
 Octave/Matlab functions and scripts related to "Calcolo Numerico e Laboratorio" 
 course in UNIFE (University of Ferrara), year 2015-2016.
 
-##What this repository is about
+## What this repository is about
 
 This repository is a collection of Octave/Matlab scripts and functions 
 which you can freely use.
@@ -22,7 +23,7 @@ glance.
 
 Fell free to contribute to this repository.
 
-##Covered arguments
+## Covered arguments
 
 - General Octave/Matlab training.
 - Miscellaneous
@@ -84,7 +85,7 @@ Fell free to contribute to this repository.
   - Fixed point method.
   - Newton's method.
 
-##Function file structure
+## Function file structure
 
 ```
   License notice
@@ -107,7 +108,7 @@ Fell free to contribute to this repository.
   Function code
 ```
 
-##License
+## License
 
 Every file in this repository is covered by the WTFPL. We decided not to use 
 the GPL because all these are implemetations of well known mathematical cases, 
